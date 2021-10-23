@@ -1,5 +1,17 @@
-.form__content {
-  max-width: 60%;
+.content__full {
+  max-width: 1200px;
   margin: auto;
-  margin-top: 8vh;
+  padding: 24px;
+
+}
+.recaptcha__content {
+  display: block;
+  margin: auto;
+  div div div {
+    margin:auto !important;
+  }
+}
+.content__form{
+  max-width: 800px;
+  margin: auto;
 }
