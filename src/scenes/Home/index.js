@@ -1,20 +1,29 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Checkbox, Row, Col, Select } from 'antd';
+import { Form, Input, Button, Select } from 'antd';
+import postForm from '../../services/api/postForm';
+import ReCAPTCHA from "react-google-recaptcha";
 import './styles.scss';
-import Select2 from 'rc-select';
 const FormItem = Form.Item;
-const Option = Select;
+const Option = Select.Option;
 const { TextArea } = Input;
 class Home extends Component {
+  onChange = (value) => {
+    console.log("Captcha value:", value);
+  }
 
-
-
+  send = () => {
+    let data = new URLSearchParams ({
+      "orgid": '00D5f000005XpZY',
+      "email": 'alex.cch97@gmail.com'
+    })
+    postForm.postForm(data);
+  }
+  
   render() {
     return (
       <div className='form__content'>
-        <Form className="form" action="https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8" method="POST">
-          
-          <FormItem
+        <Form>
+            <FormItem
               label='Contact Name'>
             <Input
               id="name" 
@@ -105,36 +114,18 @@ class Home extends Component {
               name="description" 
             />
           </FormItem>
-
-          <div class="g-recaptcha" data-sitekey="6LcorukcAAAAAAjk399RyD5Zos8IrKE2y_m-6lae"></div>
-          <Button>
+          <ReCAPTCHA
+            sitekey="6LeOyeocAAAAALYItep9gSM97oFKFuqM0UgNSUzp"
+            onChange={this.onChange}
+          />
+          <div className="g-recaptcha" data-sitekey="6LcorukcAAAAAAjk399RyD5Zos8IrKE2y_m-6lae"></div><br/>
+          <div className="g-recaptcha" data-sitekey="6LeOyeocAAAAALYItep9gSM97oFKFuqM0UgNSUzp"></div><br/>
+          <Button onClick={this.send}>
             enviar
-          </Button><FormItem
-              type='hidden'>
-            <Input
-              type='hidden'
-              name='captcha_settings'
-              value='{"keyname":"SalesforceFormsTest","fallback":"true","orgId":"00D5f000005XpZY","ts":""}'
-            />
-          </FormItem>
-          <FormItem
-              type='hidden'>
-            <Input
-              type='hidden'
-              name='orgid'
-              value='00D5f000005XpZY'
-            />
-          </FormItem>
-          <FormItem
-              type='hidden'>
-            <Input
-              type='hidden'
-              name='retURL'
-              value='https://www.salesforce.com/mx/?ir=1'
-            />
-          </FormItem>        
+          </Button>      
         </Form>
 
+        
       </div>
     )
   }
